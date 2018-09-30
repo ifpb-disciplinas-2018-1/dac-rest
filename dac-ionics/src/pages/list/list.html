@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Integrantes</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+      <ion-item-sliding *ngFor="let integrante of integrantes">
+        <ion-item class="integrante" (click)="irParaIntegrante(integrante.id)">
+        <!-- <ion-item class="integrante" > -->
+          <ion-avatar item-left >  
+            <img src="{{integrante.foto}}">
+          </ion-avatar> 
+          <h2>{{integrante.nome}}</h2>
+        </ion-item>
+        <ion-item-options side="left">
+          <button ion-button color="primary" (click)="editarIntegrante(integrante)">
+            <ion-icon name="create"></ion-icon>
+            editar
+          </button> 
+        </ion-item-options> 
+        <ion-item-options side="right"> 
+          <button ion-button color="danger" (click)="remover(integrante)">
+              <ion-icon name="trash"></ion-icon>
+              excluir
+            </button>
+        </ion-item-options> 
+      </ion-item-sliding>
+    </ion-list>
+    <ion-fab bottom right>
+        <button ion-fab color="secondary" (click)="novoIntegrante()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>
