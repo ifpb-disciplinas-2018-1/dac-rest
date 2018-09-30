@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -20,15 +22,15 @@ import javax.ejb.Startup;
 @Startup
 public class Banco {
 
-    private final List<Integrante> integrantes = new ArrayList<>();
+    private List<Integrante> integrantes = new ArrayList<>();
     private final AtomicInteger count = new AtomicInteger(4);
 
     @PostConstruct
     public void init() {
-        this.integrantes.add(new Integrante(1, "Chaves","https://randomuser.me/api/portraits/men/1.jpg"));
-        this.integrantes.add(new Integrante(2, "Kiko","https://randomuser.me/api/portraits/men/2.jpg"));
-        this.integrantes.add(new Integrante(3, "Madruga","https://randomuser.me/api/portraits/men/3.jpg"));
-        this.integrantes.add(new Integrante(4, "Florinda","https://randomuser.me/api/portraits/women/4.jpg"));
+        this.integrantes.add(new Integrante(1, "Chaves", "men"));
+        this.integrantes.add(new Integrante(2, "Kiko", "men"));
+        this.integrantes.add(new Integrante(3, "Madruga", "men"));
+        this.integrantes.add(new Integrante(4, "Florinda", "women"));
 
     }
 
@@ -44,6 +46,11 @@ public class Banco {
 
     public void removerIntegrante(Integrante integrante) {
         this.integrantes.remove(integrante);
+    }
+
+    public void atualizarIntegrante(int id, Integrante get) {
+        this.integrantes.removeIf(integrante -> integrante.getId() == id);
+        this.integrantes.add(get);
     }
 
 }

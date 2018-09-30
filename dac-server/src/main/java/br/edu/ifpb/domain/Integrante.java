@@ -18,14 +18,15 @@ public class Integrante implements Serializable {
     private int id;
     private String nome;
     private String foto;
+    private String sexo;
 
     public Integrante() {
     }
 
-    public Integrante(int id, String nome, String foto) {
+    public Integrante(int id, String nome, String sexo) {
         this.id = id;
         this.nome = nome;
-        this.foto = foto;
+        this.sexo = sexo;
     }
 
     public int getId() {
@@ -45,11 +46,46 @@ public class Integrante implements Serializable {
     }
 
     public String getFoto() {
-        return foto;
+        return String.format("https://randomuser.me/api/portraits/%s/%d.jpg", sexo, id);
+//                "large": "https://randomuser.me/api/portraits/men/47.jpg"
     }
 
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Integrante other = (Integrante) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+    
 
 }

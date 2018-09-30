@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -42,18 +43,24 @@ public class ResourcesIntegrante {
         GenericEntity<List<Integrante>> entity = new GenericEntity<List<Integrante>>(lista) {
         };
         return Response.ok() // 200
+//                .header("Access-Control-Allow-Origin", "*")
+//                .header("", "")
                 .entity(entity)
                 .build();
+        
+//        No 'Access-Control-Allow-Origin' header is present on the requested resource. 
+//        Origin 'http://localhost:8100' is therefore not allowed access.
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON})//, MediaType.APPLICATION_XML})
     public Response salvar(Integrante integrante, @Context UriInfo uriInfo) {
         Integrante entity = this.service.salvar(integrante);
         String id = String.valueOf(entity.getId());
         URI location = uriInfo.getAbsolutePathBuilder().path(id).build();
         return Response.created(location)
+//                .header("Access-Control-Allow-Origin", "*")
                 .entity(entity)
                 .build();
     }
@@ -70,6 +77,7 @@ public class ResourcesIntegrante {
         }
 
         return Response.ok() // 200
+//                .header("Access-Control-Allow-Origin", "*")
                 .entity(entity.get())
                 .build();
     }
@@ -78,6 +86,22 @@ public class ResourcesIntegrante {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response removerIntegrante(@PathParam("id") int id) {
         Optional<Integrante> entity = this.service.removerIntegranteCom(id);
+
+        if (!entity.isPresent()) {
+            return Response.noContent()// 200
+                    .build();
+        }
+
+        return Response.ok() // 200
+                .entity(entity.get())
+                .build();
+    }
+    @PUT
+    @Path("{id}") //http://localhost:8080/dac-rest/api/integrantes/1
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response atualizarIntegrante(
+            @PathParam("id") int id, Integrante integrante) {
+        Optional<Integrante> entity = this.service.atualizarIntegranteCom(id, integrante);
 
         if (!entity.isPresent()) {
             return Response.noContent()// 200

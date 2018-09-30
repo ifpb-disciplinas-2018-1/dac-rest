@@ -44,4 +44,14 @@ public class ServiceDeIntegrante {
         return integrante;
 
     }
+
+    public Optional<Integrante> atualizarIntegranteCom(int id, Integrante integrante) {
+        Optional<Integrante> retorno = integranteCom(id);
+
+        if (retorno.isPresent()) {
+            this.dao.atualizarIntegrante(id, integrante);
+        }
+
+        return Optional.of(integrante);
+    }
 }
