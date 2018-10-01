@@ -121,6 +121,3 @@ return new Promise( resolve =>{
   <button ion-button block (click)="salvar()" color="primary">Salvar</button>
   <button ion-button block (click)="cancelar()" color="primary">Cancelar</button>
 </ion-content>```
-
-
-
